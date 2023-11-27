@@ -1,0 +1,13 @@
+name: 'DangerJS Action'
+description: 'Run DangerJS'
+
+inputs:
+  custom:
+    description: 'Custom input example'
+    required: true
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    CUSTOM: ${{ inputs.custom }}

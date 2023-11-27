@@ -1,0 +1,32 @@
+{
+    "name": "shared-ci-danger-github",
+    "version": "1.0.0",
+    "description": "Shared CI DangerJS - GitHub Action",
+    "keywords": ["danger", "dangerjs", "github", "action"],
+    "author": "Tomas Sebestik <tomas.sebestik@espressif.com>",
+    "license": "Apache 2.0",
+    "main": "dangerfile.ts",
+    "dependencies": {
+        "@commitlint/lint": "^17.6.6",
+        "axios": "^1.5.1",
+        "danger": "~11.2.3",
+        "ts-node": "^10.9.1",
+        "typescript": "~5.1.6"
+    },
+    "devDependencies": {
+        "@types/jest": "^29.5.3",
+        "@types/node": "^18.15.11",
+        "@typescript-eslint/eslint-plugin": "^6.7.5",
+        "@typescript-eslint/parser": "^6.7.5",
+        "eslint": "^8.51.0",
+        "eslint-formatter-gitlab": "^5.0.0",
+        "jest": "^29.6.2",
+        "jest-junit": "^16.0.0",
+        "prettier": "^3.0.1",
+        "ts-jest": "^29.1.1"
+    },
+    "scripts": {
+        "test": "jest",
+        "lint": "eslint 'src/**/*.ts'"
+    }
+}
