@@ -8,9 +8,5 @@ cp -r /src/* /github/workspace
 # Change to the workspace directory
 cd /github/workspace || exit
 
-echo "Custom input: ${CUSTOM}"
-
-env
-
 # Run DangerJS
 npx danger ci --failOnErrors -v
