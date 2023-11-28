@@ -7,7 +7,6 @@
 const defaults = {
 	numberOfCommits: { enabled: true, maxCommitsInfo: 2, maxCommitsWarning: 5 },
 	prDescription: { enabled: true, minLength: 50, ignoredSections: 'related,release,breaking' },
-	// commitsEmail: { enabled: true },
 	commitMessages: {
 		enabled: true,
 		allowedTypes: 'change,ci,docs,feat,fix,refactor,remove,revert',
@@ -16,16 +15,13 @@ const defaults = {
 		maxBodyLineLength: 100,
 	},
 	// mrSize: { enabled: true, maxChangedLines: 1000 },
-	// jiraReferences: { enabled: true },
 	sourceBranchName: { enabled: true },
+	targetBranch: { enabled: true },
 	// updatedChangelog: {
 	// 	enabled: true,
 	// 	filename: 'CHANGELOG.md',
 	// 	triggers: 'change,feat,fix,remove,revert',
 	// },
-	// releaseNotesDescription: { enabled: false },
-	// areaLabels: { enabled: false, color: '#d2ebfa' },
-	// docsTranslation: { enabled: false },
 };
 
 /**
@@ -44,9 +40,6 @@ const config = {
 		minLength: Number(process.env.MIN_PR_DESCRIPTION_LENGTH) || defaults.prDescription.minLength,
 		ignoredSections: process.env.IGNORED_SECTIONS_DESCRIPTION || defaults.prDescription.ignoredSections,
 	},
-	// commitsEmail: {
-	// 	enabled: getEnvBool(process.env.ENABLE_CHECK_MR_COMMITS_EMAIL) ?? defaults.commitsEmail.enabled,
-	// },
 	commitMessages: {
 		enabled: getEnvBool(process.env.ENABLE_CHECK_PR_COMMIT_MESSAGES) ?? defaults.commitMessages.enabled,
 		allowedTypes: process.env.COMMIT_MESSAGE_ALLOWED_TYPES || defaults.commitMessages.allowedTypes,
@@ -58,26 +51,16 @@ const config = {
 	// 	enabled: getEnvBool(process.env.ENABLE_CHECK_MR_SIZE_LINES) ?? defaults.mrSize.enabled,
 	// 	maxChangedLines: Number(process.env.MAX_MR_LINES) || defaults.mrSize.maxChangedLines,
 	// },
-	// jiraReferences: {
-	// 	enabled: getEnvBool(process.env.ENABLE_CHECK_MR_JIRA_REFERENCES) ?? defaults.jiraReferences.enabled,
-	// },
 	sourceBranchName: {
 		enabled: getEnvBool(process.env.ENABLE_CHECK_PR_SOURCE_BRANCH_NAME) ?? defaults.sourceBranchName.enabled,
+	},
+	targetBranch: {
+		enabled: getEnvBool(process.env.ENABLE_CHECK_PR_TARGET_BRANCH) ?? defaults.targetBranch.enabled,
 	},
 	// updatedChangelog: {
 	// 	enabled: getEnvBool(process.env.ENABLE_CHECK_UPDATED_CHANGELOG) ?? defaults.updatedChangelog.enabled,
 	// 	filename: process.env.CHANGELOG_FILENAME || defaults.updatedChangelog.filename,
 	// 	triggers: process.env.CHANGELOG_UPDATE_TRIGGERS || defaults.updatedChangelog.triggers,
-	// },
-	// releaseNotesDescription: {
-	// 	enabled: getEnvBool(process.env.ENABLE_CHECK_RELEASE_NOTES_DESCRIPTION) ?? defaults.releaseNotesDescription.enabled,
-	// },
-	// areaLabels: {
-	// 	enabled: getEnvBool(process.env.ENABLE_CHECK_AREA_LABELS) ?? defaults.areaLabels.enabled,
-	// 	color: process.env.AREA_LABEL_COLOR || defaults.areaLabels.color,
-	// },
-	// docsTranslation: {
-	// 	enabled: getEnvBool(process.env.ENABLE_CHECK_DOCS_TRANSLATION) ?? defaults.docsTranslation.enabled,
 	// },
 };
 
@@ -87,18 +70,13 @@ const config = {
  * It is used to display a table that shows which checks are active and their current configurations in CI job tracelog.
  */
 const parametersForTable = [
-	// { ciVar: 'ENABLE_CHECK_AREA_LABELS', value: config.areaLabels.enabled, defaultValue: defaults.areaLabels.enabled },
-	// { ciVar: 'ENABLE_CHECK_DOCS_TRANSLATION', value: config.docsTranslation.enabled, defaultValue: defaults.docsTranslation.enabled },
 	{ ciVar: 'ENABLE_CHECK_PR_COMMIT_MESSAGES', value: config.commitMessages.enabled, defaultValue: defaults.commitMessages.enabled },
-	// { ciVar: 'ENABLE_CHECK_MR_COMMITS_EMAIL', value: config.commitsEmail.enabled, defaultValue: defaults.commitsEmail.enabled },
 	{ ciVar: 'ENABLE_CHECK_PR_DESCRIPTION', value: config.prDescription.enabled, defaultValue: defaults.prDescription.enabled },
-	// { ciVar: 'ENABLE_CHECK_MR_JIRA_REFERENCES', value: config.jiraReferences.enabled, defaultValue: defaults.jiraReferences.enabled },
 	// { ciVar: 'ENABLE_CHECK_MR_SIZE_LINES', value: config.mrSize.enabled, defaultValue: defaults.mrSize.enabled },
 	{ ciVar: 'ENABLE_CHECK_PR_SOURCE_BRANCH_NAME', value: config.sourceBranchName.enabled, defaultValue: defaults.sourceBranchName.enabled },
+	{ ciVar: 'ENABLE_CHECK_PR_TARGET_BRANCH', value: config.targetBranch.enabled, defaultValue: defaults.targetBranch.enabled },
 	{ ciVar: 'ENABLE_CHECK_PR_TOO_MANY_COMMITS', value: config.numberOfCommits.enabled, defaultValue: defaults.numberOfCommits.enabled },
-	// { ciVar: 'ENABLE_CHECK_RELEASE_NOTES_DESCRIPTION', value: config.releaseNotesDescription.enabled, defaultValue: defaults.releaseNotesDescription.enabled },
 	// { ciVar: 'ENABLE_CHECK_UPDATED_CHANGELOG', value: config.updatedChangelog.enabled, defaultValue: defaults.updatedChangelog.enabled },
-	// { ciVar: 'AREA_LABEL_COLOR', value: config.areaLabels.color, defaultValue: defaults.areaLabels.color },
 	// { ciVar: 'CHANGELOG_FILENAME', value: config.updatedChangelog.filename, defaultValue: defaults.updatedChangelog.filename },
 	// { ciVar: 'CHANGELOG_UPDATE_TRIGGERS', value: config.updatedChangelog.triggers, defaultValue: defaults.updatedChangelog.triggers },
 	{ ciVar: 'COMMIT_MESSAGE_ALLOWED_TYPES', value: config.commitMessages.allowedTypes, defaultValue: defaults.commitMessages.allowedTypes },

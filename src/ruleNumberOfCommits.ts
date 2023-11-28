@@ -14,15 +14,15 @@ export default function (): void {
 	const prCommits: number = danger.github.commits.length;
 
 	if (prCommits > config.numberOfCommits.maxCommitsWarning) {
-		recordRuleExitStatus(ruleName, 'Failed');
-		return warn(`Please consider squashing your ${prCommits} commits (simplifying branch history).`);
+		warn(`Please consider squashing your ${prCommits} commits (simplifying branch history).`);
+		return recordRuleExitStatus(ruleName, 'Failed');
 	}
 
 	if (prCommits > config.numberOfCommits.maxCommitsInfo) {
-		recordRuleExitStatus(ruleName, 'Passed (with suggestion)');
-		return message(`You might consider squashing your ${prCommits} commits (simplifying branch history).`);
+		message(`You might consider squashing your ${prCommits} commits (simplifying branch history).`);
+		return recordRuleExitStatus(ruleName, 'Passed (with suggestion)');
 	}
 
 	// At this point, the rule has passed
-	recordRuleExitStatus(ruleName, 'Passed');
+	return recordRuleExitStatus(ruleName, 'Passed');
 }

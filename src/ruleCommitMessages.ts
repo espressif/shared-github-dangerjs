@@ -132,10 +132,10 @@ export default async function (): Promise<void> {
             \n \`TIP:\` You can use [Conventional Precommit Linter](https://github.com/espressif/conventional-precommit-linter) pre-commit hook (run on your local machine in the repo: \`pre-commit install -t pre-commit -t commit-msg\`) to run this check when committing.
             \n***
             `;
-		recordRuleExitStatus(ruleName, 'Failed');
-		return warn(dangerMessage);
+		warn(dangerMessage);
+		return recordRuleExitStatus(ruleName, 'Failed');
 	}
 
 	// At this point, the rule has passed
-	recordRuleExitStatus(ruleName, 'Passed');
+	return recordRuleExitStatus(ruleName, 'Passed');
 }

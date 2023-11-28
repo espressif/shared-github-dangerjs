@@ -42,6 +42,10 @@ inputs:
     description: 'Enabled rule for check of PR source branch name'
     required: false
 
+  pr-target-branch-rule-enabled:
+    description: 'Enabled rule for check of PR target branch is default branch'
+    required: false
+
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -61,3 +65,5 @@ runs:
     IGNORED_SECTIONS_DESCRIPTION: ${{ inputs.pr-description-ignore-sections }}
 
     ENABLE_CHECK_PR_SOURCE_BRANCH_NAME: ${{ inputs.pr-source-branch-rule-enabled }}
+
+    ENABLE_CHECK_PR_TARGET_BRANCH:  ${{ inputs.pr-target-branch-rule-enabled }}

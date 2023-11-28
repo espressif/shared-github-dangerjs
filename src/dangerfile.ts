@@ -4,6 +4,7 @@ import ruleCommitMessages from './ruleCommitMessages';
 import ruleNumberOfCommits from './ruleNumberOfCommits';
 import rulePrDescription from './rulePrDescription';
 import ruleSourceBranchName from './ruleSourceBranchName';
+import ruleTargetBranch from './ruleTargetBranch';
 
 declare const results: DangerResults;
 declare const message: (message: string, results?: DangerResults) => void;
@@ -17,6 +18,7 @@ async function runDangerRules(): Promise<void> {
 	if (config.numberOfCommits.enabled) ruleNumberOfCommits();
 	if (config.prDescription.enabled) rulePrDescription();
 	if (config.sourceBranchName.enabled) ruleSourceBranchName();
+	if (config.targetBranch.enabled) await ruleTargetBranch();
 
 	// Show DangerJS individual checks statuses - visible in CI job tracelog
 	displayAllOutputStatuses();

@@ -30,10 +30,10 @@ export default function (): void {
 		const warnOutput = `The source branch \`"${sourceBranch}"\` incorrect format:\n${issuesBranchName
 			.map((message) => `  ${message}`) // Indent each issue by 2 spaces
 			.join('\n')}\nPlease rename your branch.`;
-		recordRuleExitStatus(ruleName, 'Failed');
-		return warn(warnOutput);
+		warn(warnOutput);
+		return recordRuleExitStatus(ruleName, 'Failed');
 	}
 
 	// At this point, the rule has passed
-	recordRuleExitStatus(ruleName, 'Passed');
+	return recordRuleExitStatus(ruleName, 'Passed');
 }
