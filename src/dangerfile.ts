@@ -1,16 +1,18 @@
 import { DangerResults } from 'danger';
 import { config, displayAllOutputStatuses, logParamTable } from './configParameters';
 import ruleNumberOfCommits from './ruleNumberOfCommits';
+import ruleCommitMessages from './ruleCommitMessages';
 
 declare const results: DangerResults;
 declare const message: (message: string, results?: DangerResults) => void;
 
-function runDangerRules(): void {
+async function runDangerRules(): Promise<void> {
 	// Show Danger CI job parameters - visible only in CI job trace log
 	logParamTable();
 
 	// Run DangerJS checks if they are enabled by CI job parameters
 	if (config.numberOfCommits.enabled) ruleNumberOfCommits();
+	if (config.commitMessages.enabled) await ruleCommitMessages();
 
 	// Show DangerJS individual checks statuses - visible in CI job tracelog
 	displayAllOutputStatuses();

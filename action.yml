@@ -2,7 +2,7 @@ name: 'DangerJS Action'
 description: 'Run DangerJS'
 
 inputs:
-  max-commits-enabled:
+  max-commits-rule-enabled:
     description: 'Enabled rule for Maximum number of commits in PR'
     required: false
   max-commits-info:
@@ -12,10 +12,34 @@ inputs:
     description: 'Maximum number of commits in PR (throw WARN)'
     required: false
 
+  commit-messages-rule-enabled:
+    description: 'Enabled rule for Linting commit messages in PR'
+    required: false
+  commit-messages-types:
+    description: 'Commit message allowed types'
+    required: false
+  commit-messages-min-summary-length:
+    description: 'Commit message minimum summary length'
+    required: false
+  commit-messages-max-summary-length:
+    description: 'Commit message maximum summary length'
+    required: false
+  commit-messages-max-body-line-length:
+    description: 'Commit message maximum body line length'
+    required: false
+
+
+
 runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
-    ENABLE_CHECK_MR_TOO_MANY_COMMITS: ${{ inputs.max-commits-enabled }}
+    ENABLE_CHECK_PR_TOO_MANY_COMMITS: ${{ inputs.max-commits-rule-enabled }}
     MAX_COMMITS: ${{ inputs.max-commits-info }}
     MAX_COMMITS_WARN: ${{ inputs.max-commits-warn }}
+
+    ENABLE_CHECK_PR_COMMIT_MESSAGES: ${{ inputs.commit-messages-rule-enabled }}
+    COMMIT_MESSAGE_ALLOWED_TYPES: ${{ inputs.commit-messages-types }}
+    MIN_COMMIT_MESSAGE_SUMMARY: ${{ inputs.commit-messages-min-summary-length }}
+    MAX_COMMIT_MESSAGE_SUMMARY: ${{ inputs.commit-messages-max-summary-length }}
+    MAX_COMMIT_MESSAGE_BODY_LINE: ${{ inputs.commit-messages-max-body-line-length }}
