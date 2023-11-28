@@ -1,0 +1,29 @@
+name: Pre-commit hooks CI
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+  push:
+    branches: [ master ]
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install pre-commit
+      run: pip install pre-commit
+
+    - name: Run pre-commit on changed files
+      if: github.event_name == 'pull_request'
+      run: |
+        git fetch origin ${{ github.base_ref }}
+        git diff --name-only FETCH_HEAD $(git merge-base FETCH_HEAD ${{ github.base_ref }}) | xargs pre-commit run --files
+      env:
+        SKIP: "conventional-precommit-linter,eslint"

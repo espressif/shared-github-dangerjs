@@ -5,3 +5,7 @@ This is the DangerJS pull request linter GitHub action, that can be called from 
 -TBD-
 -TBD-
 -TBD-
+
+<!-- BADGES -->
+
+![Codebase tests (Jest)](<https://github.com/espressif/shared-github-dangerjs/workflows/Codebase%20tests%20(Jest)/badge.svg>)

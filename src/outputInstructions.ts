@@ -27,11 +27,10 @@ export default async function (): Promise<void> {
 
 	// Contributors guide link, if exists in the repository
 	if (config.instructions.contributingGuideFile) {
-		const contributionsGuideLink = `https://github.com/${repositoryOwner}/${repositoryName}/blob/${await getDefaultBranch()}/${
-			config.instructions.contributingGuideFile
-		}`;
+		const defaultBranch = await getDefaultBranch();
+		const contributionsGuideLink = `https://github.com/${repositoryOwner}/${repositoryName}/blob/${defaultBranch}/${config.instructions.contributingGuideFile}`;
 		instructions += `<hr>`;
-		instructions += `📘 Please review the project's <a href="${contributionsGuideLink}}">Contributions Guide</a> for key guidelines on code, documentation, testing, and more.<br>`;
+		instructions += `📘 Please review the project's <a href="${contributionsGuideLink}">Contributions Guide</a> for key guidelines on code, documentation, testing, and more.<br>`;
 	}
 
 	// Contributor License Agreement, if provided link to it

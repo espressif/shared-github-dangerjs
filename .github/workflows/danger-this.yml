@@ -1,14 +1,10 @@
-name: Codebase tests (Jest)
-
+name: DangerJS (contributors)
 on:
   pull_request:
     types: [opened, edited, reopened, synchronize]
-  push:
-    branches: [ master ]
-
 
 jobs:
-  codebase-tests:
+  danger:
     runs-on: ubuntu-latest
     steps:
     - name: Repository checkout
@@ -23,12 +19,10 @@ jobs:
     - name: Install dependencies
       run: npm install --no-progress --no-update-notifier
 
-    - name: Run tests
-      run: npm test
-
-    - name: Publish Test Report
-      uses: actions/upload-artifact@v3
-      if: always()
-      with:
-        name: junit-report
-        path: reports/report.xml
+    - name: Run DangerJS
+      run: npx danger --dangerfile=src/dangerfile.ts ci
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        CONTRIBUTING_GUIDE_FILE: 'CONTRIBUTING.md'
+        MAX_COMMITS: '7'
+        MAX_COMMITS_WARN: '9'
