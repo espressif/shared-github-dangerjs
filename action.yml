@@ -28,7 +28,15 @@ inputs:
     description: 'Commit message maximum body line length'
     required: false
 
-
+  pr-description-rule-enabled:
+    description: 'Enabled rule for check of PR description'
+    required: false
+  pr-description-min-length:
+    description: 'Minimum length of PR description'
+    required: false
+  pr-description-ignore-sections:
+    description: 'Ignored sections of PR description'
+    required: false
 
 runs:
   using: 'docker'
@@ -43,3 +51,7 @@ runs:
     MIN_COMMIT_MESSAGE_SUMMARY: ${{ inputs.commit-messages-min-summary-length }}
     MAX_COMMIT_MESSAGE_SUMMARY: ${{ inputs.commit-messages-max-summary-length }}
     MAX_COMMIT_MESSAGE_BODY_LINE: ${{ inputs.commit-messages-max-body-line-length }}
+
+    ENABLE_CHECK_PR_DESCRIPTION: ${{ inputs.pr-description-rule-enabled }}
+    MIN_PR_DESCRIPTION_LENGTH: ${{ inputs.pr-description-min-length }}
+    IGNORED_SECTIONS_DESCRIPTION: ${{ inputs.pr-description-ignore-sections }}

@@ -6,7 +6,7 @@
  */
 const defaults = {
 	numberOfCommits: { enabled: true, maxCommitsInfo: 2, maxCommitsWarning: 5 },
-	// mrDescription: { enabled: true, minLength: 50, ignoredSections: 'related,release,breaking' },
+	prDescription: { enabled: true, minLength: 50, ignoredSections: 'related,release,breaking' },
 	// commitsEmail: { enabled: true },
 	commitMessages: {
 		enabled: true,
@@ -39,11 +39,11 @@ const config = {
 		maxCommitsInfo: Number(process.env.MAX_COMMITS) || defaults.numberOfCommits.maxCommitsInfo,
 		maxCommitsWarning: Number(process.env.MAX_COMMITS_WARN) || defaults.numberOfCommits.maxCommitsWarning,
 	},
-	// mrDescription: {
-	// 	enabled: getEnvBool(process.env.ENABLE_CHECK_MR_DESCRIPTION) ?? defaults.mrDescription.enabled,
-	// 	minLength: Number(process.env.MIN_MR_DESCRIPTION_LENGTH) || defaults.mrDescription.minLength,
-	// 	ignoredSections: process.env.IGNORED_SECTIONS_DESCRIPTION || defaults.mrDescription.ignoredSections,
-	// },
+	prDescription: {
+		enabled: getEnvBool(process.env.ENABLE_CHECK_PR_DESCRIPTION) ?? defaults.prDescription.enabled,
+		minLength: Number(process.env.MIN_PR_DESCRIPTION_LENGTH) || defaults.prDescription.minLength,
+		ignoredSections: process.env.IGNORED_SECTIONS_DESCRIPTION || defaults.prDescription.ignoredSections,
+	},
 	// commitsEmail: {
 	// 	enabled: getEnvBool(process.env.ENABLE_CHECK_MR_COMMITS_EMAIL) ?? defaults.commitsEmail.enabled,
 	// },
@@ -91,7 +91,7 @@ const parametersForTable = [
 	// { ciVar: 'ENABLE_CHECK_DOCS_TRANSLATION', value: config.docsTranslation.enabled, defaultValue: defaults.docsTranslation.enabled },
 	{ ciVar: 'ENABLE_CHECK_PR_COMMIT_MESSAGES', value: config.commitMessages.enabled, defaultValue: defaults.commitMessages.enabled },
 	// { ciVar: 'ENABLE_CHECK_MR_COMMITS_EMAIL', value: config.commitsEmail.enabled, defaultValue: defaults.commitsEmail.enabled },
-	// { ciVar: 'ENABLE_CHECK_MR_DESCRIPTION', value: config.mrDescription.enabled, defaultValue: defaults.mrDescription.enabled },
+	{ ciVar: 'ENABLE_CHECK_PR_DESCRIPTION', value: config.prDescription.enabled, defaultValue: defaults.prDescription.enabled },
 	// { ciVar: 'ENABLE_CHECK_MR_JIRA_REFERENCES', value: config.jiraReferences.enabled, defaultValue: defaults.jiraReferences.enabled },
 	// { ciVar: 'ENABLE_CHECK_MR_SIZE_LINES', value: config.mrSize.enabled, defaultValue: defaults.mrSize.enabled },
 	// { ciVar: 'ENABLE_CHECK_MR_SOURCE_BRANCH_NAME', value: config.sourceBranchName.enabled, defaultValue: defaults.sourceBranchName.enabled },
@@ -102,14 +102,14 @@ const parametersForTable = [
 	// { ciVar: 'CHANGELOG_FILENAME', value: config.updatedChangelog.filename, defaultValue: defaults.updatedChangelog.filename },
 	// { ciVar: 'CHANGELOG_UPDATE_TRIGGERS', value: config.updatedChangelog.triggers, defaultValue: defaults.updatedChangelog.triggers },
 	{ ciVar: 'COMMIT_MESSAGE_ALLOWED_TYPES', value: config.commitMessages.allowedTypes, defaultValue: defaults.commitMessages.allowedTypes },
-	// { ciVar: 'IGNORED_SECTIONS_DESCRIPTION', value: config.mrDescription.ignoredSections, defaultValue: defaults.mrDescription.ignoredSections },
+	{ ciVar: 'IGNORED_SECTIONS_DESCRIPTION', value: config.prDescription.ignoredSections, defaultValue: defaults.prDescription.ignoredSections },
 	{ ciVar: 'MAX_COMMIT_MESSAGE_BODY_LINE', value: config.commitMessages.maxBodyLineLength, defaultValue: defaults.commitMessages.maxBodyLineLength },
 	{ ciVar: 'MAX_COMMIT_MESSAGE_SUMMARY', value: config.commitMessages.maxSummaryLength, defaultValue: defaults.commitMessages.maxSummaryLength },
 	{ ciVar: 'MAX_COMMITS', value: config.numberOfCommits.maxCommitsInfo, defaultValue: defaults.numberOfCommits.maxCommitsInfo },
 	{ ciVar: 'MAX_COMMITS_WARN', value: config.numberOfCommits.maxCommitsWarning, defaultValue: defaults.numberOfCommits.maxCommitsWarning },
 	// { ciVar: 'MAX_MR_LINES', value: config.mrSize.maxChangedLines, defaultValue: defaults.mrSize.maxChangedLines },
 	{ ciVar: 'MIN_COMMIT_MESSAGE_SUMMARY', value: config.commitMessages.minSummaryLength, defaultValue: defaults.commitMessages.minSummaryLength },
-	// { ciVar: 'MIN_MR_DESCRIPTION_LENGTH', value: config.mrDescription.minLength, defaultValue: defaults.mrDescription.minLength },
+	{ ciVar: 'MIN_PR_DESCRIPTION_LENGTH', value: config.prDescription.minLength, defaultValue: defaults.prDescription.minLength },
 ];
 
 interface RuleExitStatus {
