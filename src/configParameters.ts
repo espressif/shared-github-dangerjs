@@ -17,7 +17,7 @@ const defaults = {
 	},
 	// mrSize: { enabled: true, maxChangedLines: 1000 },
 	// jiraReferences: { enabled: true },
-	// sourceBranchName: { enabled: true },
+	sourceBranchName: { enabled: true },
 	// updatedChangelog: {
 	// 	enabled: true,
 	// 	filename: 'CHANGELOG.md',
@@ -61,9 +61,9 @@ const config = {
 	// jiraReferences: {
 	// 	enabled: getEnvBool(process.env.ENABLE_CHECK_MR_JIRA_REFERENCES) ?? defaults.jiraReferences.enabled,
 	// },
-	// sourceBranchName: {
-	// 	enabled: getEnvBool(process.env.ENABLE_CHECK_MR_SOURCE_BRANCH_NAME) ?? defaults.sourceBranchName.enabled,
-	// },
+	sourceBranchName: {
+		enabled: getEnvBool(process.env.ENABLE_CHECK_PR_SOURCE_BRANCH_NAME) ?? defaults.sourceBranchName.enabled,
+	},
 	// updatedChangelog: {
 	// 	enabled: getEnvBool(process.env.ENABLE_CHECK_UPDATED_CHANGELOG) ?? defaults.updatedChangelog.enabled,
 	// 	filename: process.env.CHANGELOG_FILENAME || defaults.updatedChangelog.filename,
@@ -94,7 +94,7 @@ const parametersForTable = [
 	{ ciVar: 'ENABLE_CHECK_PR_DESCRIPTION', value: config.prDescription.enabled, defaultValue: defaults.prDescription.enabled },
 	// { ciVar: 'ENABLE_CHECK_MR_JIRA_REFERENCES', value: config.jiraReferences.enabled, defaultValue: defaults.jiraReferences.enabled },
 	// { ciVar: 'ENABLE_CHECK_MR_SIZE_LINES', value: config.mrSize.enabled, defaultValue: defaults.mrSize.enabled },
-	// { ciVar: 'ENABLE_CHECK_MR_SOURCE_BRANCH_NAME', value: config.sourceBranchName.enabled, defaultValue: defaults.sourceBranchName.enabled },
+	{ ciVar: 'ENABLE_CHECK_PR_SOURCE_BRANCH_NAME', value: config.sourceBranchName.enabled, defaultValue: defaults.sourceBranchName.enabled },
 	{ ciVar: 'ENABLE_CHECK_PR_TOO_MANY_COMMITS', value: config.numberOfCommits.enabled, defaultValue: defaults.numberOfCommits.enabled },
 	// { ciVar: 'ENABLE_CHECK_RELEASE_NOTES_DESCRIPTION', value: config.releaseNotesDescription.enabled, defaultValue: defaults.releaseNotesDescription.enabled },
 	// { ciVar: 'ENABLE_CHECK_UPDATED_CHANGELOG', value: config.updatedChangelog.enabled, defaultValue: defaults.updatedChangelog.enabled },

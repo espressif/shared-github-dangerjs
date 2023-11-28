@@ -38,6 +38,10 @@ inputs:
     description: 'Ignored sections of PR description'
     required: false
 
+  pr-source-branch-rule-enabled:
+    description: 'Enabled rule for check of PR source branch name'
+    required: false
+
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -55,3 +59,5 @@ runs:
     ENABLE_CHECK_PR_DESCRIPTION: ${{ inputs.pr-description-rule-enabled }}
     MIN_PR_DESCRIPTION_LENGTH: ${{ inputs.pr-description-min-length }}
     IGNORED_SECTIONS_DESCRIPTION: ${{ inputs.pr-description-ignore-sections }}
+
+    ENABLE_CHECK_PR_SOURCE_BRANCH_NAME: ${{ inputs.pr-source-branch-rule-enabled }}
