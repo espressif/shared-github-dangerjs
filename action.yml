@@ -5,20 +5,17 @@ inputs:
   max-commits-enabled:
     description: 'Enabled rule for Maximum number of commits in PR'
     required: false
-    default: 'true'
   max-commits-info:
     description: 'Maximum number of commits in PR (throw MESSAGE)'
     required: false
-    default: '1'
   max-commits-warn:
     description: 'Maximum number of commits in PR (throw WARN)'
     required: false
-    default: '2'
 
 runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
-    MAX_COMMITS_ENABLED: ${{ inputs.max-commits-enabled }}
+    ENABLE_CHECK_MR_TOO_MANY_COMMITS: ${{ inputs.max-commits-enabled }}
     MAX_COMMITS: ${{ inputs.max-commits-info }}
     MAX_COMMITS_WARN: ${{ inputs.max-commits-warn }}
