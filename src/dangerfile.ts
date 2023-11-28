@@ -1,6 +1,7 @@
 import { DangerResults } from 'danger';
 import { config, displayAllOutputStatuses, logParamTable } from './configParameters';
 import ruleCommitMessages from './ruleCommitMessages';
+import rulePrSize from './rulePrSize';
 import ruleNumberOfCommits from './ruleNumberOfCommits';
 import rulePrDescription from './rulePrDescription';
 import ruleSourceBranchName from './ruleSourceBranchName';
@@ -17,6 +18,7 @@ async function runDangerRules(): Promise<void> {
 	if (config.commitMessages.enabled) await ruleCommitMessages();
 	if (config.numberOfCommits.enabled) ruleNumberOfCommits();
 	if (config.prDescription.enabled) rulePrDescription();
+	if (config.prSize.enabled) rulePrSize();
 	if (config.sourceBranchName.enabled) ruleSourceBranchName();
 	if (config.targetBranch.enabled) await ruleTargetBranch();
 

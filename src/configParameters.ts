@@ -14,7 +14,7 @@ const defaults = {
 		maxSummaryLength: 72,
 		maxBodyLineLength: 100,
 	},
-	// mrSize: { enabled: true, maxChangedLines: 1000 },
+	prSize: { enabled: true, maxChangedLines: 1000 },
 	sourceBranchName: { enabled: true },
 	targetBranch: { enabled: true },
 	// updatedChangelog: {
@@ -47,10 +47,10 @@ const config = {
 		maxSummaryLength: Number(process.env.MAX_COMMIT_MESSAGE_SUMMARY) || defaults.commitMessages.maxSummaryLength,
 		maxBodyLineLength: Number(process.env.MAX_COMMIT_MESSAGE_BODY_LINE) || defaults.commitMessages.maxBodyLineLength,
 	},
-	// mrSize: {
-	// 	enabled: getEnvBool(process.env.ENABLE_CHECK_MR_SIZE_LINES) ?? defaults.mrSize.enabled,
-	// 	maxChangedLines: Number(process.env.MAX_MR_LINES) || defaults.mrSize.maxChangedLines,
-	// },
+	prSize: {
+		enabled: getEnvBool(process.env.ENABLE_CHECK_PR_SIZE_LINES) ?? defaults.prSize.enabled,
+		maxChangedLines: Number(process.env.MAX_PR_LINES) || defaults.prSize.maxChangedLines,
+	},
 	sourceBranchName: {
 		enabled: getEnvBool(process.env.ENABLE_CHECK_PR_SOURCE_BRANCH_NAME) ?? defaults.sourceBranchName.enabled,
 	},
@@ -72,7 +72,7 @@ const config = {
 const parametersForTable = [
 	{ ciVar: 'ENABLE_CHECK_PR_COMMIT_MESSAGES', value: config.commitMessages.enabled, defaultValue: defaults.commitMessages.enabled },
 	{ ciVar: 'ENABLE_CHECK_PR_DESCRIPTION', value: config.prDescription.enabled, defaultValue: defaults.prDescription.enabled },
-	// { ciVar: 'ENABLE_CHECK_MR_SIZE_LINES', value: config.mrSize.enabled, defaultValue: defaults.mrSize.enabled },
+	{ ciVar: 'ENABLE_CHECK_PR_SIZE_LINES', value: config.prSize.enabled, defaultValue: defaults.prSize.enabled },
 	{ ciVar: 'ENABLE_CHECK_PR_SOURCE_BRANCH_NAME', value: config.sourceBranchName.enabled, defaultValue: defaults.sourceBranchName.enabled },
 	{ ciVar: 'ENABLE_CHECK_PR_TARGET_BRANCH', value: config.targetBranch.enabled, defaultValue: defaults.targetBranch.enabled },
 	{ ciVar: 'ENABLE_CHECK_PR_TOO_MANY_COMMITS', value: config.numberOfCommits.enabled, defaultValue: defaults.numberOfCommits.enabled },
@@ -85,7 +85,7 @@ const parametersForTable = [
 	{ ciVar: 'MAX_COMMIT_MESSAGE_SUMMARY', value: config.commitMessages.maxSummaryLength, defaultValue: defaults.commitMessages.maxSummaryLength },
 	{ ciVar: 'MAX_COMMITS', value: config.numberOfCommits.maxCommitsInfo, defaultValue: defaults.numberOfCommits.maxCommitsInfo },
 	{ ciVar: 'MAX_COMMITS_WARN', value: config.numberOfCommits.maxCommitsWarning, defaultValue: defaults.numberOfCommits.maxCommitsWarning },
-	// { ciVar: 'MAX_MR_LINES', value: config.mrSize.maxChangedLines, defaultValue: defaults.mrSize.maxChangedLines },
+	{ ciVar: 'MAX_PR_LINES', value: config.prSize.maxChangedLines, defaultValue: defaults.prSize.maxChangedLines },
 	{ ciVar: 'MIN_COMMIT_MESSAGE_SUMMARY', value: config.commitMessages.minSummaryLength, defaultValue: defaults.commitMessages.minSummaryLength },
 	{ ciVar: 'MIN_PR_DESCRIPTION_LENGTH', value: config.prDescription.minLength, defaultValue: defaults.prDescription.minLength },
 ];
