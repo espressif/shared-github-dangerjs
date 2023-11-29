@@ -5,6 +5,12 @@
  * If an environment variable for a parameter is not set, the system will use the default value from this object.
  */
 const defaults = {
+	instructions: {
+		enabled: true,
+		isGitlabMirror: false,
+		contributingGuideFile: '',
+		claLink: '',
+	},
 	numberOfCommits: { enabled: true, maxCommitsInfo: 2, maxCommitsWarning: 5 },
 	prDescription: { enabled: true, minLength: 50, ignoredSections: 'related,release,breaking' },
 	commitMessages: {
@@ -17,11 +23,6 @@ const defaults = {
 	prSize: { enabled: true, maxChangedLines: 1000 },
 	sourceBranchName: { enabled: true },
 	targetBranch: { enabled: true },
-	// updatedChangelog: {
-	// 	enabled: true,
-	// 	filename: 'CHANGELOG.md',
-	// 	triggers: 'change,feat,fix,remove,revert',
-	// },
 };
 
 /**
@@ -30,38 +31,39 @@ const defaults = {
  * If an environment variable is not set, the system will fall back to the default value from the `defaults` object.
  */
 const config = {
+	instructions: {
+		enabled: getEnvBool(process.env.ENABLE_OUTPUT_INSTRUCTIONS) ?? defaults.instructions.enabled,
+		isGitlabMirror: getEnvBool(process.env.IS_GITLAB_MIRROR) ?? defaults.instructions.isGitlabMirror,
+		contributingGuideFile: process.env.CONTRIBUTING_GUIDE_FILE || defaults.instructions.contributingGuideFile,
+		claLink: process.env.CLA_LINK || defaults.instructions.claLink,
+	},
 	numberOfCommits: {
-		enabled: getEnvBool(process.env.ENABLE_CHECK_PR_TOO_MANY_COMMITS) ?? defaults.numberOfCommits.enabled,
+		enabled: getEnvBool(process.env.ENABLE_RULE_PR_TOO_MANY_COMMITS) ?? defaults.numberOfCommits.enabled,
 		maxCommitsInfo: Number(process.env.MAX_COMMITS) || defaults.numberOfCommits.maxCommitsInfo,
 		maxCommitsWarning: Number(process.env.MAX_COMMITS_WARN) || defaults.numberOfCommits.maxCommitsWarning,
 	},
 	prDescription: {
-		enabled: getEnvBool(process.env.ENABLE_CHECK_PR_DESCRIPTION) ?? defaults.prDescription.enabled,
+		enabled: getEnvBool(process.env.ENABLE_RULE_PR_DESCRIPTION) ?? defaults.prDescription.enabled,
 		minLength: Number(process.env.MIN_PR_DESCRIPTION_LENGTH) || defaults.prDescription.minLength,
 		ignoredSections: process.env.IGNORED_SECTIONS_DESCRIPTION || defaults.prDescription.ignoredSections,
 	},
 	commitMessages: {
-		enabled: getEnvBool(process.env.ENABLE_CHECK_PR_COMMIT_MESSAGES) ?? defaults.commitMessages.enabled,
+		enabled: getEnvBool(process.env.ENABLE_RULE_PR_COMMIT_MESSAGES) ?? defaults.commitMessages.enabled,
 		allowedTypes: process.env.COMMIT_MESSAGE_ALLOWED_TYPES || defaults.commitMessages.allowedTypes,
 		minSummaryLength: Number(process.env.MIN_COMMIT_MESSAGE_SUMMARY) || defaults.commitMessages.minSummaryLength,
 		maxSummaryLength: Number(process.env.MAX_COMMIT_MESSAGE_SUMMARY) || defaults.commitMessages.maxSummaryLength,
 		maxBodyLineLength: Number(process.env.MAX_COMMIT_MESSAGE_BODY_LINE) || defaults.commitMessages.maxBodyLineLength,
 	},
 	prSize: {
-		enabled: getEnvBool(process.env.ENABLE_CHECK_PR_SIZE_LINES) ?? defaults.prSize.enabled,
+		enabled: getEnvBool(process.env.ENABLE_RULE_PR_SIZE_LINES) ?? defaults.prSize.enabled,
 		maxChangedLines: Number(process.env.MAX_PR_LINES) || defaults.prSize.maxChangedLines,
 	},
 	sourceBranchName: {
-		enabled: getEnvBool(process.env.ENABLE_CHECK_PR_SOURCE_BRANCH_NAME) ?? defaults.sourceBranchName.enabled,
+		enabled: getEnvBool(process.env.ENABLE_RULE_PR_SOURCE_BRANCH_NAME) ?? defaults.sourceBranchName.enabled,
 	},
 	targetBranch: {
-		enabled: getEnvBool(process.env.ENABLE_CHECK_PR_TARGET_BRANCH) ?? defaults.targetBranch.enabled,
+		enabled: getEnvBool(process.env.ENABLE_RULE_PR_TARGET_BRANCH) ?? defaults.targetBranch.enabled,
 	},
-	// updatedChangelog: {
-	// 	enabled: getEnvBool(process.env.ENABLE_CHECK_UPDATED_CHANGELOG) ?? defaults.updatedChangelog.enabled,
-	// 	filename: process.env.CHANGELOG_FILENAME || defaults.updatedChangelog.filename,
-	// 	triggers: process.env.CHANGELOG_UPDATE_TRIGGERS || defaults.updatedChangelog.triggers,
-	// },
 };
 
 /**
@@ -70,21 +72,22 @@ const config = {
  * It is used to display a table that shows which checks are active and their current configurations in CI job tracelog.
  */
 const parametersForTable = [
-	{ ciVar: 'ENABLE_CHECK_PR_COMMIT_MESSAGES', value: config.commitMessages.enabled, defaultValue: defaults.commitMessages.enabled },
-	{ ciVar: 'ENABLE_CHECK_PR_DESCRIPTION', value: config.prDescription.enabled, defaultValue: defaults.prDescription.enabled },
-	{ ciVar: 'ENABLE_CHECK_PR_SIZE_LINES', value: config.prSize.enabled, defaultValue: defaults.prSize.enabled },
-	{ ciVar: 'ENABLE_CHECK_PR_SOURCE_BRANCH_NAME', value: config.sourceBranchName.enabled, defaultValue: defaults.sourceBranchName.enabled },
-	{ ciVar: 'ENABLE_CHECK_PR_TARGET_BRANCH', value: config.targetBranch.enabled, defaultValue: defaults.targetBranch.enabled },
-	{ ciVar: 'ENABLE_CHECK_PR_TOO_MANY_COMMITS', value: config.numberOfCommits.enabled, defaultValue: defaults.numberOfCommits.enabled },
-	// { ciVar: 'ENABLE_CHECK_UPDATED_CHANGELOG', value: config.updatedChangelog.enabled, defaultValue: defaults.updatedChangelog.enabled },
-	// { ciVar: 'CHANGELOG_FILENAME', value: config.updatedChangelog.filename, defaultValue: defaults.updatedChangelog.filename },
-	// { ciVar: 'CHANGELOG_UPDATE_TRIGGERS', value: config.updatedChangelog.triggers, defaultValue: defaults.updatedChangelog.triggers },
+	{ ciVar: 'ENABLE_RULE_PR_COMMIT_MESSAGES', value: config.commitMessages.enabled, defaultValue: defaults.commitMessages.enabled },
+	{ ciVar: 'ENABLE_RULE_PR_DESCRIPTION', value: config.prDescription.enabled, defaultValue: defaults.prDescription.enabled },
+	{ ciVar: 'ENABLE_RULE_PR_SIZE_LINES', value: config.prSize.enabled, defaultValue: defaults.prSize.enabled },
+	{ ciVar: 'ENABLE_RULE_PR_SOURCE_BRANCH_NAME', value: config.sourceBranchName.enabled, defaultValue: defaults.sourceBranchName.enabled },
+	{ ciVar: 'ENABLE_RULE_PR_TARGET_BRANCH', value: config.targetBranch.enabled, defaultValue: defaults.targetBranch.enabled },
+	{ ciVar: 'ENABLE_RULE_PR_TOO_MANY_COMMITS', value: config.numberOfCommits.enabled, defaultValue: defaults.numberOfCommits.enabled },
+	{ ciVar: 'ENABLE_OUTPUT_INSTRUCTIONS', value: config.instructions.enabled, defaultValue: defaults.instructions.enabled },
+	{ ciVar: 'CLA_LINK', value: config.instructions.claLink, defaultValue: defaults.instructions.claLink },
 	{ ciVar: 'COMMIT_MESSAGE_ALLOWED_TYPES', value: config.commitMessages.allowedTypes, defaultValue: defaults.commitMessages.allowedTypes },
+	{ ciVar: 'CONTRIBUTING_GUIDE_FILE', value: config.instructions.contributingGuideFile, defaultValue: defaults.instructions.contributingGuideFile },
 	{ ciVar: 'IGNORED_SECTIONS_DESCRIPTION', value: config.prDescription.ignoredSections, defaultValue: defaults.prDescription.ignoredSections },
+	{ ciVar: 'IS_GITLAB_MIRROR', value: config.instructions.isGitlabMirror, defaultValue: defaults.instructions.isGitlabMirror },
 	{ ciVar: 'MAX_COMMIT_MESSAGE_BODY_LINE', value: config.commitMessages.maxBodyLineLength, defaultValue: defaults.commitMessages.maxBodyLineLength },
 	{ ciVar: 'MAX_COMMIT_MESSAGE_SUMMARY', value: config.commitMessages.maxSummaryLength, defaultValue: defaults.commitMessages.maxSummaryLength },
-	{ ciVar: 'MAX_COMMITS', value: config.numberOfCommits.maxCommitsInfo, defaultValue: defaults.numberOfCommits.maxCommitsInfo },
 	{ ciVar: 'MAX_COMMITS_WARN', value: config.numberOfCommits.maxCommitsWarning, defaultValue: defaults.numberOfCommits.maxCommitsWarning },
+	{ ciVar: 'MAX_COMMITS', value: config.numberOfCommits.maxCommitsInfo, defaultValue: defaults.numberOfCommits.maxCommitsInfo },
 	{ ciVar: 'MAX_PR_LINES', value: config.prSize.maxChangedLines, defaultValue: defaults.prSize.maxChangedLines },
 	{ ciVar: 'MIN_COMMIT_MESSAGE_SUMMARY', value: config.commitMessages.minSummaryLength, defaultValue: defaults.commitMessages.minSummaryLength },
 	{ ciVar: 'MIN_PR_DESCRIPTION_LENGTH', value: config.prDescription.minLength, defaultValue: defaults.prDescription.minLength },

@@ -128,9 +128,8 @@ export default async function (): Promise<void> {
 		];
 		const dangerMessage = `\n**Some issues found for the commit messages in this PR:**\n${issuesAllCommitMessages.join('\n')}
 			\n***
-			\n**Please consider updating these commit messages** - here are some basic tips:\n${basicTips.join('\n')}
-            \n \`TIP:\` You can use [Conventional Precommit Linter](https://github.com/espressif/conventional-precommit-linter) pre-commit hook (run on your local machine in the repo: \`pre-commit install -t pre-commit -t commit-msg\`) to run this check when committing.
-            \n***
+			\n**Please fix these commit messages** - here are some basic tips:\n${basicTips.join('\n')}
+            \n \`TIP:\` Install pre-commit hooks and run this check when committing (uses the [Conventional Precommit Linter](https://github.com/espressif/conventional-precommit-linter)).
             `;
 		warn(dangerMessage);
 		return recordRuleExitStatus(ruleName, 'Failed');

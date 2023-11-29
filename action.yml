@@ -2,7 +2,7 @@ name: 'DangerJS Action'
 description: 'Run DangerJS'
 
 inputs:
-  max-commits-rule-enabled:
+  rule-max-commits:
     description: 'Enabled rule for Maximum number of commits in PR'
     required: false
   max-commits-info:
@@ -12,7 +12,7 @@ inputs:
     description: 'Maximum number of commits in PR (throw WARN)'
     required: false
 
-  commit-messages-rule-enabled:
+  rule-commit-messages:
     description: 'Enabled rule for Linting commit messages in PR'
     required: false
   commit-messages-types:
@@ -28,42 +28,65 @@ inputs:
     description: 'Commit message maximum body line length'
     required: false
 
-  pr-description-rule-enabled:
+  rule-description:
     description: 'Enabled rule for check of PR description'
     required: false
-  pr-description-min-length:
+  description-min-length:
     description: 'Minimum length of PR description'
     required: false
-  pr-description-ignore-sections:
+  description-ignore-sections:
     description: 'Ignored sections of PR description'
     required: false
 
-  pr-source-branch-rule-enabled:
+  rule-source-branch:
     description: 'Enabled rule for check of PR source branch name'
     required: false
 
-  pr-target-branch-rule-enabled:
+  rule-target-branch:
     description: 'Enabled rule for check of PR target branch is default branch'
+    required: false
+
+  rule-size-lines:
+    description: 'Enabled rule for check of PR number of changed lines'
+    required: false
+  max-size-lines:
+    description: 'Maximum number of changed lines in PR'
+    required: false
+
+  # Output
+  instructions:
+    description: 'Enabled output instructions under issue table in the PR comment'
+    required: false
+  instructions-contributions-file:
+    description: 'Custom name of Contributions Guide file in repository'
+    required: false
+  instructions-gitlab-mirror:
+    description: 'Enabled info about this is only Gitlab mirror'
+    required: false
+  instructions-cla-link:
+    description: 'Link to project Contributor License Agreement'
     required: false
 
 runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
-    ENABLE_CHECK_PR_TOO_MANY_COMMITS: ${{ inputs.max-commits-rule-enabled }}
-    MAX_COMMITS: ${{ inputs.max-commits-info }}
-    MAX_COMMITS_WARN: ${{ inputs.max-commits-warn }}
-
-    ENABLE_CHECK_PR_COMMIT_MESSAGES: ${{ inputs.commit-messages-rule-enabled }}
+    ENABLE_RULE_PR_COMMIT_MESSAGES: ${{ inputs.rule-commit-messages }}
+    ENABLE_RULE_PR_DESCRIPTION: ${{ inputs.rule-description }}
+    ENABLE_RULE_PR_SOURCE_BRANCH_NAME: ${{ inputs.rule-source-branch }}
+    ENABLE_RULE_PR_TARGET_BRANCH:  ${{ inputs.rule-target-branch }}
+    ENABLE_RULE_PR_TOO_MANY_COMMITS: ${{ inputs.rule-max-commits }}
+    ENABLE_RULE_PR_SIZE_LINES: ${{ inputs.rule-size-lines }}
+    ENABLE_OUTPUT_INSTRUCTIONS: ${{ inputs.instructions }}
+    CLA_LINK: ${{ inputs.instructions-cla-link}}
     COMMIT_MESSAGE_ALLOWED_TYPES: ${{ inputs.commit-messages-types }}
-    MIN_COMMIT_MESSAGE_SUMMARY: ${{ inputs.commit-messages-min-summary-length }}
-    MAX_COMMIT_MESSAGE_SUMMARY: ${{ inputs.commit-messages-max-summary-length }}
+    CONTRIBUTING_GUIDE_FILE: ${{ inputs.instructions-contributions-file }}
+    IGNORED_SECTIONS_DESCRIPTION: ${{ inputs.description-ignore-sections }}
+    IS_GITLAB_MIRROR: ${{ inputs.instructions-gitlab-mirror}}
     MAX_COMMIT_MESSAGE_BODY_LINE: ${{ inputs.commit-messages-max-body-line-length }}
-
-    ENABLE_CHECK_PR_DESCRIPTION: ${{ inputs.pr-description-rule-enabled }}
-    MIN_PR_DESCRIPTION_LENGTH: ${{ inputs.pr-description-min-length }}
-    IGNORED_SECTIONS_DESCRIPTION: ${{ inputs.pr-description-ignore-sections }}
-
-    ENABLE_CHECK_PR_SOURCE_BRANCH_NAME: ${{ inputs.pr-source-branch-rule-enabled }}
-
-    ENABLE_CHECK_PR_TARGET_BRANCH:  ${{ inputs.pr-target-branch-rule-enabled }}
+    MAX_COMMIT_MESSAGE_SUMMARY: ${{ inputs.commit-messages-max-summary-length }}
+    MAX_COMMITS_WARN: ${{ inputs.max-commits-warn }}
+    MAX_COMMITS: ${{ inputs.max-commits-info }}
+    MAX_PR_LINES: ${{ inputs.max-size-lines }}
+    MIN_COMMIT_MESSAGE_SUMMARY: ${{ inputs.commit-messages-min-summary-length }}
+    MIN_PR_DESCRIPTION_LENGTH: ${{ inputs.description-min-length }}

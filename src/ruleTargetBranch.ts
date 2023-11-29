@@ -17,9 +17,9 @@ export default async function (): Promise<void> {
 
 	if (prTargetBranch !== defaultBranch) {
 		warn(`
-        The **target branch** for this Pull Request **must be the default branch** of the project (\`${defaultBranch}\`).\n
-        If you would like to add this feature to a different branch, please state this in the PR description and we will consider it.
-        `);
+		The **target branch** for this Pull Request **must be the default branch** of the project (\`${defaultBranch}\`).\n
+		If you would like to add this feature to a different branch, please state this in the PR description and we will consider it.
+		`);
 		return recordRuleExitStatus(ruleName, 'Failed');
 	}
 

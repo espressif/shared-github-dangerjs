@@ -6,6 +6,7 @@ import ruleNumberOfCommits from './ruleNumberOfCommits';
 import rulePrDescription from './rulePrDescription';
 import ruleSourceBranchName from './ruleSourceBranchName';
 import ruleTargetBranch from './ruleTargetBranch';
+import outputInstructions from './outputInstructions';
 
 declare const results: DangerResults;
 declare const message: (message: string, results?: DangerResults) => void;
@@ -24,6 +25,9 @@ async function runDangerRules(): Promise<void> {
 
 	// Show DangerJS individual checks statuses - visible in CI job tracelog
 	displayAllOutputStatuses();
+
+	// Show DangerJS dynamic output message and instructions - visible in feedback comment
+	await outputInstructions();
 
 	// Show success message if no issues are found
 	const foundIssues: boolean = Boolean(results.fails.length + results.warnings.length + results.messages.length);
