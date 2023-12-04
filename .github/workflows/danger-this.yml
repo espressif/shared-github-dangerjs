@@ -1,0 +1,28 @@
+name: DangerJS (contributors)
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+jobs:
+  danger:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Repository checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18.x'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm install --no-progress --no-update-notifier
+
+    - name: Run DangerJS
+      run: npx danger --dangerfile=src/dangerfile.ts ci
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        CONTRIBUTING_GUIDE_FILE: 'CONTRIBUTING.md'
+        MAX_COMMITS: '7'
+        MAX_COMMITS_WARN: '9'
