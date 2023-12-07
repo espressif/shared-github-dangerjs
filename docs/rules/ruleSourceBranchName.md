@@ -1,28 +1,30 @@
-# Pull Request (PR) Target Branch
+# Pull Request (PR) Source Branch
 
--   code: `src/ruleTargetBranch.ts`
+-   code: `src/ruleSourceBranchName.ts`
 -   rule failing output is: `warn` (⚠️ )
 
-Selecting the appropriate target branch for a pull request (PR) is important for a seamless integration process and maintaining an organized Git history. It ensures that changes are merged into the correct branch, avoiding potential conflicts or errors.
+Properly naming the source branch is important for maintaining a clean and manageable Git history, as well as for avoiding issues with Git synchronization and case-insensitive file systems (such as macOS).
 
--   **Default Branch as Target:** The target branch for the pull request **must be the default branch** of the project. This ensures a consistent flow and minimizes the risk of merging changes into the wrong branch.
+-   **Slash Limit:** The source branch name should contain no more than one slash (`/`). Multiple slashes can lead to complications, especially during Git synchronization.
 
--   **Why This Rule?** Using the default branch as the target for PRs maintains uniformity and order in our repository. It simplifies the process for contributors and maintainers alike, making it easier to manage the project's development.
+-   **Case Sensitivity:** The source branch name should be entirely in lowercase. Using uppercase letters can cause issues on case-insensitive file systems, making it difficult to switch branches or causing errors during cloning.
 
--   **Exceptions:** In certain situations, targeting a branch other than the default may be necessary. These cases should be rare and well-justified to avoid confusion and maintain the integrity of the project's codebase.
+-   **Why These Rules?** Adhering to these naming conventions ensures that our Git operations run smoothly across different operating systems and minimizes the risk of sync issues. It also makes it easier to understand the branch's purpose at a glance.
+
+-   **Exceptions:** While these are general guidelines, there may be exceptional cases where deviations are acceptable. However, it's advisable to stick to these rules for the sake of consistency and to avoid potential issues.
 
 ---
 
 ## Custom Configuration
 
-To disable this rule:
+Disable this rule:
 
 <!-- prettier-ignore -->
 ```yaml
     - name: DangerJS pull request linter
       uses: espressif/shared-github-dangerjs@v1
       with:
-        rule-target-branch: 'false'
+        rule-source-branch: 'false'
 ```
 
 ---
