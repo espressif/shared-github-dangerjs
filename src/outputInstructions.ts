@@ -36,7 +36,7 @@ export default async function (): Promise<void> {
 	// Contributor License Agreement, if provided link to it
 	if (config.instructions.claLink) {
 		instructions += `<hr>`;
-		instructions += `🖊️ Please also make sure you have <strong>read and signed</strong> the <a href="${config.instructions.claLink}}">Contributor License Agreement</a> for this project.<br>`;
+		instructions += `🖊️ Please also make sure you have <strong>read and signed</strong> the <a href="${config.instructions.claLink}">Contributor License Agreement</a> for this project.<br>`;
 	}
 
 	// Basic instructions (ALWAYS SHOWN)
