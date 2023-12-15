@@ -91,23 +91,23 @@ If your project has specific needs, Shared GitHub DangerJS can be configured to 
 
 **Here is complete list of configurable parameters:**
 
-| Parameter                                              | CI Variable                            | Type | Default value                                      |
-| ------------------------------------------------------ | -------------------------------------- | ---- | -------------------------------------------------- |
-| Enable rule PR Description                             | `rule-description`                     | str  | `"true"` (use `"false"` to disable this rule)      |
-| Enable rule PR Lint Commit Messages                    | `rule-commit-messages`                 | str  | `"true"` (use `"false"` to disable this rule)      |
-| Enable rule PR Size (changed lines)                    | `rule-size-lines`                      | str  | `"true"` (use `"false"` to disable this rule)      |
-| Enable rule PR Source branch name                      | `rule-source-branch`                   | str  | `"true"` (use `"false"` to disable this rule)      |
-| Enable rule PR Target branch name                      | `rule-target-branch`                   | str  | `"true"` (use `"false"` to disable this rule)      |
-| Enable rule PR Too Many Commits                        | `rule-max-commits`                     | str  | `"true"` (use `"false"` to disable this check)     |
-| Commit message allowed "Type"s                         | `commit-messages-types`                | str  | `"change,ci,docs,feat,fix,refactor,remove,revert"` |
-| Commit message maximum length "Body" line              | `commit-messages-max-body-line-length` | str  | `"100"`                                            |
-| Commit message maximum length "Summary"                | `commit-messages-max-summary-length`   | str  | `"72"`                                             |
-| Commit message minimum length "Summary"                | `commit-messages-min-summary-length`   | str  | `"20"`                                             |
-| Ignore sections of PR description when counting length | `description-ignore-sections`          | str  | `"related,release,breaking"`                       |
-| Maximum changed code lines in PR                       | `max-size-lines`                       | str  | `"1000"`                                           |
-| Maximum commits in PR (soft limit, throw `info`)       | `max-commits-info`                     | str  | `"2"`                                              |
-| Maximum commits in PR (hard limit, throw `warn`)       | `max-commits-warn`                     | str  | `"5"`                                              |
-| Minimum length of PR description                       | `description-min-length`               | str  | `"50"`                                             |
+| Parameter                                              | CI Variable                            | Type | Default value                                           |
+| ------------------------------------------------------ | -------------------------------------- | ---- | ------------------------------------------------------- |
+| Enable rule PR Description                             | `rule-description`                     | str  | `"true"` (use `"false"` to disable this rule)           |
+| Enable rule PR Lint Commit Messages                    | `rule-commit-messages`                 | str  | `"true"` (use `"false"` to disable this rule)           |
+| Enable rule PR Size (changed lines)                    | `rule-size-lines`                      | str  | `"true"` (use `"false"` to disable this rule)           |
+| Enable rule PR Source branch name                      | `rule-source-branch`                   | str  | `"true"` (use `"false"` to disable this rule)           |
+| Enable rule PR Target branch name                      | `rule-target-branch`                   | str  | `"true"` (use `"false"` to disable this rule)           |
+| Enable rule PR Too Many Commits                        | `rule-max-commits`                     | str  | `"true"` (use `"false"` to disable this check)          |
+| Commit message allowed "Type"s                         | `commit-messages-types`                | str  | `"change,ci,docs,feat,fix,refactor,remove,revert,test"` |
+| Commit message maximum length "Body" line              | `commit-messages-max-body-line-length` | str  | `"100"`                                                 |
+| Commit message maximum length "Summary"                | `commit-messages-max-summary-length`   | str  | `"72"`                                                  |
+| Commit message minimum length "Summary"                | `commit-messages-min-summary-length`   | str  | `"20"`                                                  |
+| Ignore sections of PR description when counting length | `description-ignore-sections`          | str  | `"related,release,breaking"`                            |
+| Maximum changed code lines in PR                       | `max-size-lines`                       | str  | `"1000"`                                                |
+| Maximum commits in PR (soft limit, throw `info`)       | `max-commits-info`                     | str  | `"2"`                                                   |
+| Maximum commits in PR (hard limit, throw `warn`)       | `max-commits-warn`                     | str  | `"5"`                                                   |
+| Minimum length of PR description                       | `description-min-length`               | str  | `"50"`                                                  |
 
 These values can be defined in your project `DangerJS Pull Request linter` workflow, for example like this:
 

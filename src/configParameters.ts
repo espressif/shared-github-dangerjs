@@ -15,7 +15,7 @@ const defaults = {
 	prDescription: { enabled: true, minLength: 50, ignoredSections: 'related,release,breaking' },
 	commitMessages: {
 		enabled: true,
-		allowedTypes: 'change,ci,docs,feat,fix,refactor,remove,revert',
+		allowedTypes: 'change,ci,docs,feat,fix,refactor,remove,revert,test',
 		minSummaryLength: 20,
 		maxSummaryLength: 72,
 		maxBodyLineLength: 100,
