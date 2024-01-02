@@ -26,12 +26,6 @@ describe('TESTS: Commit messages style', () => {
 			jest.doMock('../src/configParameters', () => ({
 				config: {
 					...originalConfig,
-					commitMessages: {
-						maxBodyLineLength: 100,
-						maxSummaryLength: 72,
-						minSummaryLength: 20,
-						allowedTypes: 'change,ci,docs,feat,fix,refactor,remove,revert',
-					},
 				},
 				recordRuleExitStatus,
 			}));
@@ -40,6 +34,12 @@ describe('TESTS: Commit messages style', () => {
 
 		it('EXPECT PASS: Message with "scope" and "body"', async () => {
 			danger.git.commits = [{ message: 'feat(bootloader): This is commit message with scope and body\n\nThis is a text of body' }];
+			await ruleCommitMessages();
+			expect(warn).not.toHaveBeenCalled();
+		});
+
+		it('EXPECT PASS: Message with "scope" and "body", type "test"', async () => {
+			danger.git.commits = [{ message: 'test(bootloader): This is commit message with scope and body\n\nThis is a text of body' }];
 			await ruleCommitMessages();
 			expect(warn).not.toHaveBeenCalled();
 		});
