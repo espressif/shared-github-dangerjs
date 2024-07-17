@@ -43,7 +43,7 @@ on:
 
 permissions:
   pull-requests: write
-  contents: write
+  contents: read
 
 jobs:
   pull-request-style-linter:
@@ -60,6 +60,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
+-   Note: The `permissions:` block here is doing basically nothing; both values are default, and it would work the same without this block. It is recommended, though, to keep this block in the workflow file to be more explicit about workflow permissions since this action is running with the `pull_request_target` trigger. Feel free to remove the permissions block if a minimalist syntax suits you better.
+
 -   **GitHub token** This token is automatically obtained from the GitHub project and its specific permissions are set in the yaml workflow file. Avoid adding unnecessarily high permissions to this token, keep it set as in the example above.
 
 ---
@@ -67,6 +69,14 @@ jobs:
 **🤝 Quick Integration:** If your goal is to add Shared GitHub DangerJS into your project with the default Espressif settings, **then at this point you're all set!**
 
 For custom configurations, refer to the descriptions of individual rules to learn how to tweak them to your needs.
+
+---
+
+**📖 Important note:** The Danger action _will not run in the pull request where you are adding this to your project_. This is due to the workflow trigger `pull_request_target`; this trigger runs code in the context of the target branch (typically `master`/`main`), and at that point, the workflow file is not there yet.
+
+It will work for all subsequent pull requests right after workflow file `.github/workflows/dangerjs.yml` is on the default branch of your project.
+
+We recommend creating an independent PR just for this and not mixing it with other code changes or repository workflow file updates. That way, it can be easily merged and be ready for your contributors' PRs.
 
 ---
 
