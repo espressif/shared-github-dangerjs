@@ -1,6 +1,6 @@
 {
     "name": "shared-ci-danger-github",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Shared CI DangerJS - GitHub Action",
     "keywords": ["danger", "dangerjs", "github", "action"],
     "author": "Tomas Sebestik <tomas.sebestik@espressif.com>",
